@@ -4,4 +4,4 @@ def open_page(driver, page_address):
 
 
 def get_error_message(message, current, test):
-    return f'{message and "."}\n Текущий: {current}. Ожидаемый: {test}/n'
+    return f'{message}{message and "."}\n Текущий: {current}. Ожидаемый: {test}/n'
