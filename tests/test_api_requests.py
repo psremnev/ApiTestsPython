@@ -20,7 +20,7 @@ def get_service(endpoint):
 
 def keys_is_equal_test_keys(res, test_keys):
     res_keys = list(dict(res.json()).keys())
-    return res_keys == test_keys
+    return res_keys == test_keys, res_keys, test_keys
 
 
 class TestApiRequests:
@@ -36,8 +36,9 @@ class TestApiRequests:
         current_status = str(res.status_code)
         msg = f'Точка входа: {endpoint}-list'
         assert current_status == test_status, get_error_message(msg, current_status, test_status)
+        keys_equal_res, res_keys, test_keys = keys_is_equal_test_keys(res, res_test_data.get('res_keys'))
         assert keys_is_equal_test_keys(res, res_test_data.get('res_keys')), get_error_message(msg,
-                                                                                              current_status, test_status)
+                                                                                              res_keys, test_keys)
 
     @ pytest.mark.parametrize('endpoint, res_test_data', [(Endpoints.USERS.value, user_list),
                                         (Endpoints.UNKNOWN.value, unknown_list)])
@@ -49,9 +50,9 @@ class TestApiRequests:
         current_status = str(res.status_code)
         msg = f'Точка входа: {endpoint}-list'
         assert current_status == test_status, get_error_message(msg, current_status, test_status)
+        keys_equal_res, res_keys, test_keys = keys_is_equal_test_keys(res, res_test_data.get('res_keys'))
         assert keys_is_equal_test_keys(res, res_test_data.get('res_keys')), get_error_message(msg,
-                                                                                              current_status,
-                                                                                              test_status)
+                                                                                              res_keys, test_keys)
 
     @pytest.mark.parametrize('endpoint, res_test_data', [(Endpoints.USERS.value, user_single),
                                                          (Endpoints.UNKNOWN.value, unknown_single)])
@@ -63,9 +64,9 @@ class TestApiRequests:
         current_status = str(res.status_code)
         msg = f'Точка входа: {endpoint}-single'
         assert current_status == test_status, get_error_message(msg, current_status, test_status)
+        keys_equal_res, res_keys, test_keys = keys_is_equal_test_keys(res, res_test_data.get('res_keys'))
         assert keys_is_equal_test_keys(res, res_test_data.get('res_keys')), get_error_message(msg,
-                                                                                              current_status,
-                                                                                              test_status)
+                                                                                              res_keys, test_keys)
 
     @pytest.mark.parametrize('endpoint, req_data, res_test_data',
                              [(Endpoints.USERS.value, users.get('create'),
@@ -78,9 +79,9 @@ class TestApiRequests:
         current_status = str(res.status_code)
         msg = f'Точка входа: {endpoint}-create'
         assert current_status == test_status, get_error_message(msg, current_status, test_status)
+        keys_equal_res, res_keys, test_keys = keys_is_equal_test_keys(res, res_test_data.get('res_keys'))
         assert keys_is_equal_test_keys(res, res_test_data.get('res_keys')), get_error_message(msg,
-                                                                                              current_status,
-                                                                                              test_status)
+                                                                                              res_keys, test_keys)
 
     @pytest.mark.parametrize('endpoint, req_data, res_test_data',
                              [(Endpoints.USERS.value, users.get('update'),
@@ -93,9 +94,9 @@ class TestApiRequests:
         current_status = str(res.status_code)
         msg = f'Точка входа: {endpoint}-update_put'
         assert current_status == test_status, get_error_message(msg, current_status, test_status)
+        keys_equal_res, res_keys, test_keys = keys_is_equal_test_keys(res, res_test_data.get('res_keys'))
         assert keys_is_equal_test_keys(res, res_test_data.get('res_keys')), get_error_message(msg,
-                                                                                              current_status,
-                                                                                              test_status)
+                                                                                              res_keys, test_keys)
 
     @pytest.mark.parametrize('endpoint, req_data, res_test_data',
                              [(Endpoints.USERS.value, users.get('update'),
@@ -108,9 +109,9 @@ class TestApiRequests:
         current_status = str(res.status_code)
         msg = f'Точка входа: {endpoint}-update_patch'
         assert current_status == test_status, get_error_message(msg, current_status, test_status)
+        keys_equal_res, res_keys, test_keys = keys_is_equal_test_keys(res, res_test_data.get('res_keys'))
         assert keys_is_equal_test_keys(res, res_test_data.get('res_keys')), get_error_message(msg,
-                                                                                              current_status,
-                                                                                              test_status)
+                                                                                              res_keys, test_keys)
 
     @pytest.mark.parametrize('endpoint, res_test_data',
                              [(Endpoints.USERS.value, user_delete)])
@@ -144,9 +145,9 @@ class TestApiRequests:
                                                                 current_status, test_status)
         msg = f'Точка входа: {endpoint}-delayed'
         assert current_status == test_status, get_error_message(msg, current_status, test_status)
+        keys_equal_res, res_keys, test_keys = keys_is_equal_test_keys(res, res_test_data.get('res_keys'))
         assert keys_is_equal_test_keys(res, res_test_data.get('res_keys')), get_error_message(msg,
-                                                                                              current_status,
-                                                                                              test_status)
+                                                                                              res_keys, test_keys)
 
     @pytest.mark.parametrize('endpoint, res_test_data', [(Endpoints.USERS.value, user_not_found),
                                                          (Endpoints.UNKNOWN.value, unknown_not_found)])
@@ -158,9 +159,9 @@ class TestApiRequests:
         current_status = str(res.status_code)
         msg = f'Точка входа: {endpoint}-not_found'
         assert current_status == test_status, get_error_message(msg, current_status, test_status)
+        keys_equal_res, res_keys, test_keys = keys_is_equal_test_keys(res, res_test_data.get('res_keys'))
         assert keys_is_equal_test_keys(res, res_test_data.get('res_keys')), get_error_message(msg,
-                                                                                              current_status,
-                                                                                              test_status)
+                                                                                              res_keys, test_keys)
 
     @pytest.mark.parametrize('req_data, res_test_data', [(register.get('success'), register_success),
                                                      (register.get('unsuccess'), register_unsuccess)])
@@ -173,9 +174,9 @@ class TestApiRequests:
         current_status = str(res.status_code)
         msg = f'Точка входа: {endpoint}-register'
         assert current_status == test_status, get_error_message(msg, current_status, test_status)
+        keys_equal_res, res_keys, test_keys = keys_is_equal_test_keys(res, res_test_data.get('res_keys'))
         assert keys_is_equal_test_keys(res, res_test_data.get('res_keys')), get_error_message(msg,
-                                                                                              current_status,
-                                                                                              test_status)
+                                                                                              res_keys, test_keys)
 
     @pytest.mark.parametrize('req_data, res_test_data', [(login.get('success'), login_success),
                                                          (login.get('unsuccess'), login_unsuccess)])
@@ -188,6 +189,6 @@ class TestApiRequests:
         current_status = str(res.status_code)
         msg = f'Точка входа: {endpoint}-login'
         assert current_status == test_status, get_error_message(msg, current_status, test_status)
+        keys_equal_res, res_keys, test_keys = keys_is_equal_test_keys(res, res_test_data.get('res_keys'))
         assert keys_is_equal_test_keys(res, res_test_data.get('res_keys')), get_error_message(msg,
-                                                                                              current_status,
-                                                                                              test_status)
+                                                                                              res_keys, test_keys)
